@@ -1,6 +1,10 @@
 # display-back-end
 展示模块的后端部分
 
+## 效果
+
+![后台管理页面](docs/img/demo.png)
+
 ## 安装(开发环境)
 
 ```shell script
