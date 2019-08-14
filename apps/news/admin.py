@@ -6,3 +6,7 @@ from .models import Article
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'publish_time', 'status')
+    list_filter = ('publish_time', 'status')
+    search_fields = ('title', 'content')
+    date_hierarchy = 'publish_time'
+    ordering = ('status', 'publish_time')
