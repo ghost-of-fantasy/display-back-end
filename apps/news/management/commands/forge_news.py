@@ -12,9 +12,13 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--article_num', default=50, type=int, help='Quantity of article, default is 50')
+        parser.add_argument('--category_num', default=10, type=int, help='Quantity of article, category is 10')
 
     def handle(self, *args, **options):
-        from news.fakes import fake_article
+        from news.fakes import fake_article, fake_category
+
+        click.echo('Generating the category...')
+        fake_category(options['category_num'])
 
         click.echo('Generating the article...')
         fake_article(options['article_num'])
