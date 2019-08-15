@@ -25,3 +25,4 @@ $ python manage.py forge_news # 使用自制命令来更为具体地生成假数
 - [RuntimeWarning: DateTimeField received a naive datetime](https://stackoverflow.com/questions/18622007/runtimewarning-datetimefield-received-a-naive-datetime)
 - [使用Python的faker包伪造假数据](https://blog.csdn.net/lb245557472/article/details/80758307)
 - [Welcome to Faker’s documentation!](https://faker.readthedocs.io/en/master/)
+- [Django REST framework](https://www.django-rest-framework.org)

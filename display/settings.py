@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news.apps.NewsConfig',
-    'django_seed',
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'display.wsgi.application'
+
+# restframework
+# https://www.django-rest-framework.org/tutorial/quickstart/
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # 设置分页函数
+    'PAGE_SIZE': 10  # 设置每页内容数
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

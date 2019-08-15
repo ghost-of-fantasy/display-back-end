@@ -15,8 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+
+from news.views import UserViewSet, GroupViewSet, ArticleViewSet, CategoryViewSet
+
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)  # 用户管理api
+router.register(r'groups', GroupViewSet)  # 用户组管理api
+router.register(r'article', ArticleViewSet)  # 文章管理api
+router.register(r'category', CategoryViewSet)  # 文章类别管理api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('news/', include('news.urls', namespace='news'))
+    path('', include('news.urls', namespace='news')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include(router.urls)),
 ]
