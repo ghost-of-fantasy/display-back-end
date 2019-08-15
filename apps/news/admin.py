@@ -5,7 +5,7 @@ from .models import Article, Category
 # Register your models here.
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'publish_time', 'status')
+    list_display = ('id', 'title', 'publish_time', 'status')
     list_filter = ('publish_time', 'status')
     search_fields = ('title', 'content')
     date_hierarchy = 'publish_time'
@@ -14,7 +14,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created')
+    list_display = ('id', 'name', 'created')
     list_filter = ('created',)
     search_fields = ('name',)
     date_hierarchy = 'created'

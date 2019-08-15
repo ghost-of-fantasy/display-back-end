@@ -6,6 +6,7 @@ from django.utils import timezone
 
 class Category(models.Model):
     """文章类型"""
+    id = models.AutoField(primary_key=True, verbose_name='ID')
     name = models.CharField(max_length=50, null=False, unique=True, verbose_name='类型名称')
     created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
@@ -25,8 +26,9 @@ class Article(models.Model):
         ('published', 'Published'),
     )
 
+    id = models.AutoField(primary_key=True, verbose_name='ID')
     website_name = models.CharField(max_length=50, verbose_name='来源网站的名称')
-    url = models.CharField(max_length=500, primary_key=True, verbose_name='文章链接')
+    url = models.CharField(max_length=500, unique=True, verbose_name='文章链接')
     title = models.CharField(max_length=250, verbose_name='文章标题')
     content = models.TextField(verbose_name='文章内容')
     category = models.ForeignKey(Category, models.DO_NOTHING, verbose_name='文章类型')

@@ -8,11 +8,10 @@ fake = Faker("zh_CN")
 
 def fake_category(count=10):
     """生成假的文章类型"""
-    pass
-    # for i in range(count):
-    #     Category.objects.get_or_create(
-    #         name=fake.word()
-    #     )
+    for i in range(count):
+        Category.objects.get_or_create(
+            name=fake.word()
+        )
 
 
 def fake_article(count=50):
