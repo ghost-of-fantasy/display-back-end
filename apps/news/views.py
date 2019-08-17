@@ -39,6 +39,7 @@ class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('id', 'name')  # 搜索
     ordering_fields = ('id', 'created')  # 排序
+    pagination_class = None
 
     def get_serializer_class(self):
         return CategorySerializer
