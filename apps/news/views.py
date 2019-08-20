@@ -45,29 +45,6 @@ class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin)
         return CategorySerializer
 
 
-# Create your views here.
-
-def article_list(request):
-    """
-    文章列表视图
-    :param request:
-    :return:
-    """
-    articles = Article.objects.get_queryset().filter(status='published')
-    return render(request, 'news/article/list.html', {'articles': articles})
-
-
-def article_detail(request, id):
-    """
-    文章详细内容视图
-    :param request:
-    :param id:
-    :return:
-    """
-    article = get_object_or_404(Article, id=id)
-    return render(request, 'news/article/detail.html', {'article': article})
-
-
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

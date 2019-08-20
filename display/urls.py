@@ -25,9 +25,10 @@ router.register(r'groups', GroupViewSet)  # 用户组管理api
 router.register(r'article', ArticleViewSet)  # 文章管理api
 router.register(r'category', CategoryViewSet)  # 文章类别管理api
 
+# 后面执行的会覆盖前面执行的
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('news.urls', namespace='news')),
+    path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include(router.urls)),
 ]

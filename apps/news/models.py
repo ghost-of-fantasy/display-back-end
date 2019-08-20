@@ -44,3 +44,22 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    """评论"""
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_comment', verbose_name='文章')
+    name = models.CharField(max_length=80, verbose_name='评论人名称')
+    email = models.EmailField(verbose_name='评论人邮件地址')
+    body = models.TextField(verbose_name='评论内容')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+    active = models.BooleanField(default=True, verbose_name='是否通过审核')
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = '评论'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return 'Comment by {} on {}'.format(self.name, self.article)
