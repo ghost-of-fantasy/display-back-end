@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5
+    container_name: gamenews_db
+    environment:
+      MYSQL_DATABASE: gamenews_db
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - data:/var/lib/mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
+    ports:
+      - "3307:3306" # 将3306映射到3307, 供其他容器使用
+
+  web:
+    build: .
+    container_name: gamenews_web
+    volumes:
+      - .:/usr/src/app
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=foo
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    links:
+      - db
+    restart: always
+
+  nginx:
+    build: ./nginx
+    container_name: gamenews_nginx
+    ports:
+      - "8001:80"
+    volumes:
+      - ./static:/usr/share/nginx/html/static
+      - ./media:/usr/share/nginx/html/media
+    restart: always
+
+volumes:
+  data:

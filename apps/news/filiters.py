@@ -12,7 +12,8 @@ class ArticleFiliter(django_filters.rest_framework.FilterSet):
     url = django_filters.CharFilter(field_name='url')
     title = django_filters.CharFilter(field_name='title')
     content = django_filters.CharFilter(field_name='content')
-    category = django_filters.CharFilter(method='top_category_filter', field_name='category')
+    category = django_filters.CharFilter(field_name='category')
+    # category = django_filters.CharFilter(method='top_category_filter', field_name='category')
 
     class Meta:
         model = Article
@@ -20,5 +21,4 @@ class ArticleFiliter(django_filters.rest_framework.FilterSet):
 
     # 查找指定分类下的所有图书`
     def top_category_filter(self, queryset, name, value):
-        print(queryset)
         return queryset.filter(Q(category__name=value))
