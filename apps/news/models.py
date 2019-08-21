@@ -52,7 +52,7 @@ class Comment(models.Model):
     name = models.CharField(max_length=80, verbose_name='评论人名称')
     email = models.EmailField(verbose_name='评论人邮件地址')
     body = models.TextField(verbose_name='评论内容')
-    created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    created = models.DateTimeField(default=timezone.now, verbose_name='创建时间')
     updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     active = models.BooleanField(default=True, verbose_name='是否通过审核')
 
