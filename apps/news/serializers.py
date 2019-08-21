@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from .models import Article, Category
+from .models import Article, Category, Comment
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -15,10 +15,24 @@ class CategorySerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     """文章的序列化函数"""
     category = CategorySerializer()
+
     # category_name = serializers.SerializerMethodField('get_category_name')
 
     class Meta:
         model = Article
+        fields = "__all__"
+
+    def get_category_name(self, obj):
+        category = Category.objects.get(id=obj.category.id)
+        serializer = CategorySerializer(category)
+        return serializer.data['name']
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    """文章评论的序列化函数"""
+
+    class Meta:
+        model = Comment
         fields = "__all__"
 
     def get_category_name(self, obj):

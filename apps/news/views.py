@@ -5,15 +5,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
-from apps.news.filiters import ArticleFiliter
-from apps.news.models import Article, Category
-from apps.news.serializers import ArticleSerializer, CategorySerializer
+from apps.news.filiters import ArticleFiliter, CommentFiliter
+from apps.news.models import Article, Category, Comment
+from apps.news.serializers import ArticleSerializer, CategorySerializer, CommentSerializer
 
 
 # Create your views here.
 
 class ArticlePagination(PageNumberPagination):
-    """用于文章内容分页的视图"""
+    """用于文章内容API分页的类"""
     page_size = 10
     page_size_query_param = 'page_size'
     page_query_param = 'p'
@@ -21,7 +21,7 @@ class ArticlePagination(PageNumberPagination):
 
 
 class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
-    """文章管理的视图"""
+    """文章管理API的视图"""
     queryset = Article.objects.all()
     pagination_class = ArticlePagination  # 分页函数
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -34,7 +34,7 @@ class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
 
 
 class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
-    """文章类型管理的视图"""
+    """文章类型管理API的视图"""
     queryset = Category.objects.all()
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('id', 'name')  # 搜索
@@ -43,6 +43,18 @@ class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin)
 
     def get_serializer_class(self):
         return CategorySerializer
+
+
+class CommentViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
+    """评论管理API的视图"""
+    queryset = Comment.objects.all()
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ('id', 'body')  # 搜索
+    ordering_fields = ('id', 'created')  # 排序
+    filter_class = CommentFiliter
+
+    def get_serializer_class(self):
+        return CommentSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
