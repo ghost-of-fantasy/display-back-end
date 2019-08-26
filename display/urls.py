@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from news.views import UserViewSet, GroupViewSet, ArticleViewSet, CategoryViewSet, CommentViewSet
+from news.views import UserViewSet, GroupViewSet, ArticleViewSet, CategoryViewSet, CommentViewSet, TagViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)  # 用户管理api
@@ -25,6 +25,7 @@ router.register(r'groups', GroupViewSet)  # 用户组管理api
 router.register(r'article', ArticleViewSet)  # 文章管理api
 router.register(r'category', CategoryViewSet)  # 文章类别管理api
 router.register(r'comment', CommentViewSet)  # 评论管理api
+router.register(r'tag', TagViewSet)  # 评论管理api
 
 # 后面执行的会覆盖前面执行的
 urlpatterns = [

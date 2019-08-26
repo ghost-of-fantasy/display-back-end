@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 # Create your models here.
-
 class Category(models.Model):
     """文章类型"""
     id = models.AutoField(primary_key=True, verbose_name='ID')
@@ -36,6 +36,7 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='published', verbose_name='状态')
+    tags = TaggableManager()
 
     class Meta:
         ordering = ('-publish_time',)
