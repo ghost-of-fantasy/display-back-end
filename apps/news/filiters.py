@@ -18,9 +18,10 @@ class ArticleFiliter(django_filters.rest_framework.FilterSet):
         model = Article
         fields = ['id', 'website_name', 'title', 'category']
 
-    # 查找指定分类下的所有图书`
+    # 查找指定分类下的所有图书
     def top_category_filter(self, queryset, name, value):
         return queryset.filter(Q(category__name=value))
+
 
 class CommentFiliter(django_filters.rest_framework.FilterSet):
     """评论的过滤类"""
