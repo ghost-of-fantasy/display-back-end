@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User, Group
 from apps.news.serializers import UserSerializer, GroupSerializer
@@ -7,7 +8,8 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
 from apps.news.filiters import ArticleFiliter, CommentFiliter
 from apps.news.models import Article, Category, Comment
-from apps.news.serializers import ArticleSerializer, CategorySerializer, CommentSerializer, TagSerializer, ArticleCreateSerializer
+from apps.news.serializers import ArticleSerializer, CategorySerializer, CommentSerializer, TagSerializer, \
+    ArticleCreateSerializer
 from taggit.models import Tag
 
 
@@ -16,6 +18,14 @@ from taggit.models import Tag
 class ArticlePagination(PageNumberPagination):
     """用于文章内容API分页的类"""
     page_size = 10
+    page_size_query_param = 'page_size'
+    page_query_param = 'p'
+    max_page_size = 100
+
+
+class TagsPagination(PageNumberPagination):
+    """用于文章内容API分页的类"""
+    page_size = 30
     page_size_query_param = 'page_size'
     page_query_param = 'p'
     max_page_size = 100
@@ -51,9 +61,11 @@ class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin)
 
 class TagViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
     """文章类型管理API的视图"""
-    queryset = Tag.objects.all()
+    tag_queryset = Tag.objects.all()
+    queryset = tag_queryset.annotate(num_times=Count('taggit_taggeditem_items'))
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    pagination_class = None
+    pagination_class = TagsPagination
+    ordering_fields = ('id', 'num_times')
 
     def get_serializer_class(self):
         return TagSerializer

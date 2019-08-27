@@ -1,16 +1,23 @@
 from django.contrib.auth.models import User, Group
+from django.db.models import Count
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from taggit.models import Tag
 from .models import Article, Category, Comment
-from taggit_serializer.serializers import (TagListSerializerField,
-                                           TaggitSerializer)
 
 
 class TagSerializer(serializers.ModelSerializer):
+    num_times = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Tag
         fields = "__all__"
+
+    def get_num_times(self, obj):
+        queryset = Tag.objects.filter(name=obj.name)
+        tags = queryset.annotate(num_times=Count('taggit_taggeditem_items'))
+
+        return tags[0].num_times
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -21,7 +28,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ArticleSerializer(TaggitSerializer, serializers.ModelSerializer):
+class ArticleSerializer(serializers.ModelSerializer):
     """文章的序列化函数"""
     category = CategorySerializer()
     tags = serializers.SerializerMethodField('get_tags')
@@ -33,10 +40,7 @@ class ArticleSerializer(TaggitSerializer, serializers.ModelSerializer):
     def get_tags(self, obj):
         tags = []
         for i in obj.tags.all():
-            tag = {
-                'id': i.id,
-                'name': i.name
-            }
+            tag = {'id': i.id, 'name': i.name}
             tags.append(tag)
         return tags
 
