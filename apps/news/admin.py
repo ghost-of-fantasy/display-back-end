@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Category, Comment
+from .models import Article, Comment
 
 
 # Register your models here.
@@ -12,15 +12,6 @@ class ArticleAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish_time'
     ordering = ('status', 'publish_time')
 
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    """文章类别管理类"""
-    list_display = ('id', 'name', 'created')
-    list_filter = ('created',)
-    search_fields = ('name',)
-    date_hierarchy = 'created'
-    ordering = ('created',)
 
 
 @admin.register(Comment)

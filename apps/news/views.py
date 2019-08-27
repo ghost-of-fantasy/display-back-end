@@ -7,8 +7,8 @@ from rest_framework import viewsets, filters, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
 from apps.news.filiters import ArticleFiliter, CommentFiliter
-from apps.news.models import Article, Category, Comment
-from apps.news.serializers import ArticleSerializer, CategorySerializer, CommentSerializer, TagSerializer, \
+from apps.news.models import Article, Comment
+from apps.news.serializers import ArticleSerializer, CommentSerializer, TagSerializer, \
     ArticleCreateSerializer
 from taggit.models import Tag
 
@@ -45,18 +45,6 @@ class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
             return ArticleSerializer
         elif self.action == 'create':
             return ArticleCreateSerializer
-
-
-class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
-    """文章类型管理API的视图"""
-    queryset = Category.objects.all()
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('id', 'name')  # 搜索
-    ordering_fields = ('id', 'created')  # 排序
-    pagination_class = None
-
-    def get_serializer_class(self):
-        return CategorySerializer
 
 
 class TagViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):

@@ -3,7 +3,7 @@ from django.db.models import Count
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from taggit.models import Tag
-from .models import Article, Category, Comment
+from .models import Article, Comment
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -19,18 +19,8 @@ class TagSerializer(serializers.ModelSerializer):
 
         return tags[0].num_times
 
-
-class CategorySerializer(serializers.ModelSerializer):
-    """文章类别的序列化函数"""
-
-    class Meta:
-        model = Category
-        fields = "__all__"
-
-
 class ArticleSerializer(serializers.ModelSerializer):
     """文章的序列化函数"""
-    category = CategorySerializer()
     tags = serializers.SerializerMethodField('get_tags')
 
     class Meta:
@@ -58,7 +48,7 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ("title", "content", "category", 'url', 'tags', 'website_name', 'publish_time')
+        fields = ("title", "content", 'url', 'tags', 'website_name', 'publish_time')
 
     def create(self, validated_data):
         article = Article(
@@ -85,11 +75,6 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = "__all__"
-
-    def get_category_name(self, obj):
-        category = Category.objects.get(id=obj.category.id)
-        serializer = CategorySerializer(category)
-        return serializer.data['name']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
