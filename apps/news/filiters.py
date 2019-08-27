@@ -12,15 +12,15 @@ class ArticleFiliter(django_filters.rest_framework.FilterSet):
     title = django_filters.CharFilter(field_name='title')
     category = django_filters.CharFilter(field_name='category')
 
-    tags = django_filters.CharFilter(method='top_category_filter', field_name='tags')
+    tags = django_filters.CharFilter(method='tags_filter', field_name='tags')
 
     class Meta:
         model = Article
         fields = ['id', 'website_name', 'title', 'category', 'tags']
 
     # 查找指定分类下的所有图书
-    def top_category_filter(self, queryset, name, value):
-        tag = Tag.objects.get(slug=value)
+    def tags_filter(self, queryset, name, value):
+        tag = Tag.objects.get(name=value)
         return queryset.filter(tags__in=[tag])
 
 

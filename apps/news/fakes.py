@@ -22,7 +22,7 @@ def fake_article(count=50):
     for i in range(count):
         category = categorys[random.randint(0, category_count - 1)][0]
         try:
-            Article.objects.get_or_create(
+            article = Article(
                 website_name=fake.name(),  # 来源网站的名称
                 url=fake.uri(),  # 文章链接
                 title=fake.sentence(),  # 文章标题
@@ -30,6 +30,11 @@ def fake_article(count=50):
                 category=Category.objects.get(name=category),  # 文章类型
                 publish_time=fake.date_time_this_year(tzinfo=pytz.UTC)
             )
+            article.save()
+            for i in range(random.randint(1, 10)):
+                print(i)
+                article.tags.add(fake.word())
+
         except Exception as e:
             print(e)
 

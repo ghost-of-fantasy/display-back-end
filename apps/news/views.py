@@ -7,8 +7,9 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
 from apps.news.filiters import ArticleFiliter, CommentFiliter
 from apps.news.models import Article, Category, Comment
-from apps.news.serializers import ArticleSerializer, CategorySerializer, CommentSerializer, TagSerializer
+from apps.news.serializers import ArticleSerializer, CategorySerializer, CommentSerializer, TagSerializer, ArticleCreateSerializer
 from taggit.models import Tag
+
 
 # Create your views here.
 
@@ -30,7 +31,10 @@ class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
     ordering_fields = ('id', 'publish_time')  # 排序
 
     def get_serializer_class(self):
-        return ArticleSerializer
+        if self.action == 'list':
+            return ArticleSerializer
+        elif self.action == 'create':
+            return ArticleCreateSerializer
 
 
 class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
@@ -43,6 +47,7 @@ class CategoryViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin)
 
     def get_serializer_class(self):
         return CategorySerializer
+
 
 class TagViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
     """文章类型管理API的视图"""
