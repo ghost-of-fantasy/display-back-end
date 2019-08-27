@@ -32,7 +32,6 @@ def fake_article(count=50):
             )
             article.save()
             for i in range(random.randint(1, 10)):
-                print(i)
                 article.tags.add(fake.word())
 
         except Exception as e:

@@ -3,6 +3,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from taggit.models import Tag
 from .models import Article, Category, Comment
+from taggit_serializer.serializers import (TagListSerializerField,
+                                           TaggitSerializer)
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -19,7 +21,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ArticleSerializer(serializers.ModelSerializer):
+class ArticleSerializer(TaggitSerializer, serializers.ModelSerializer):
     """文章的序列化函数"""
     category = CategorySerializer()
     tags = serializers.SerializerMethodField('get_tags')
@@ -31,7 +33,11 @@ class ArticleSerializer(serializers.ModelSerializer):
     def get_tags(self, obj):
         tags = []
         for i in obj.tags.all():
-            tags.append(i.name)
+            tag = {
+                'id': i.id,
+                'name': i.name
+            }
+            tags.append(tag)
         return tags
 
 

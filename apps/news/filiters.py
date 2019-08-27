@@ -20,7 +20,7 @@ class ArticleFiliter(django_filters.rest_framework.FilterSet):
 
     # 查找指定分类下的所有图书
     def tags_filter(self, queryset, name, value):
-        tag = Tag.objects.get(name=value)
+        tag = Tag.objects.get(id=value)
         return queryset.filter(tags__in=[tag])
 
 
