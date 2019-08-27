@@ -31,7 +31,7 @@ def fake_article(count=50):
                 publish_time=fake.date_time_this_year(tzinfo=pytz.UTC)
             )
             article.save()
-            for i in range(random.randint(1, 10)):
+            for i in range(random.randint(1, 4)):
                 article.tags.add(fake.word())
 
         except Exception as e:
