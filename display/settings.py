@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'user_operation.apps.UserOperationConfig',
     'news.apps.NewsConfig',
     'rest_framework',
     'django_filters',
@@ -143,3 +144,14 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+import datetime
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'Token',
+}
+
+REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+
+API_KEY = "ab45b3863e40a0dcf70b731fb93e1ab1"

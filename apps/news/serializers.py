@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User, Group
 from django.db.models import Count
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
