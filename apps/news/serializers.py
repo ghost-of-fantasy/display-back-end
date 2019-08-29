@@ -19,6 +19,7 @@ class TagSerializer(serializers.ModelSerializer):
 
         return tags[0].num_times
 
+
 class ArticleSerializer(serializers.ModelSerializer):
     """文章的序列化函数"""
     tags = serializers.SerializerMethodField('get_tags')
@@ -77,19 +78,3 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = "__all__"
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    """用户的序列化函数"""
-
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'groups']
-
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    """用户组的序列化函数"""
-
-    class Meta:
-        model = Group
-        fields = ['url', 'name']

@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['plrom.niracler.com']
 
+AUTH_USER_MODEL = 'users.UserProfile'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig',
     'news.apps.NewsConfig',
     'rest_framework',
     'django_filters',
