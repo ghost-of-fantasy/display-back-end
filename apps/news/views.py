@@ -38,7 +38,7 @@ class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_class = ArticleFiliter
     search_fields = ('id', 'content')  # 搜索
-    ordering_fields = ('id', 'publish_time')  # 排序
+    ordering_fields = ('id', 'publish_time', 'created')  # 排序
 
     def get_serializer_class(self):
         if self.action == 'list':

@@ -42,7 +42,7 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
     content = serializers.CharField(label="文章内容", help_text="文章内容", required=True, allow_blank=False)
     url = serializers.CharField(label="文章链接", help_text="文章链接", required=True, allow_blank=False,
                                 validators=[UniqueValidator(queryset=Article.objects.all(), message="该链接的文章已经存在")])
-    tags = serializers.CharField(label="文章标签", help_text="文章标签", required=True)
+    tags = serializers.CharField(label="文章标签", help_text="文章标签", required=False)
     website_name = serializers.CharField(label="文章来源网站", required=True)
     publish_time = serializers.DateTimeField(label="发表时间", required=True)
 
@@ -55,16 +55,18 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
             title=validated_data['title'],
             content=validated_data['content'],
             url=validated_data['url'],
-            category=validated_data['category'],
             website_name=validated_data['website_name'],
             publish_time=validated_data['publish_time']
         )
         article.save()
-        tags = validated_data['tags']
-        for tag in tags.split(' '):
-            if tag:
-                article.tags.add(tag)
-        article.tags = tags
+        try:
+            tags = validated_data['tags']
+            for tag in tags.split(' '):
+                if tag:
+                    article.tags.add(tag)
+            article.tags = tags
+        except Exception as e:
+            article.tags = ""
 
         return article
 
