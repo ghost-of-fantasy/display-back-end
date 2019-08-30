@@ -141,9 +141,7 @@ USE_TZ = True  # 时区支持，根据时区显示时间
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    'static',  # 这个名字是文件根路径下的静态文件文件夹（名字自己定义，注意后面有逗号的）
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
