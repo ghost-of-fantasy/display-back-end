@@ -2,7 +2,7 @@ from django.db.models import Count
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from taggit.models import Tag
-from .models import Article, Comment
+from .models import Article
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -71,9 +71,3 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
         return article
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    """文章评论的序列化函数"""
-
-    class Meta:
-        model = Comment
-        fields = "__all__"

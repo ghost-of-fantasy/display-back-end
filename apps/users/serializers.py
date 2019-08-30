@@ -5,11 +5,22 @@ from datetime import datetime
 from datetime import timedelta
 from rest_framework.validators import UniqueValidator
 
-from .models import VerifyCode
+from .models import VerifyCode, UserProfile
 
 from display.settings import REGEX_MOBILE
 
 User = get_user_model()
+
+
+class UserSerializer(serializers.Serializer):
+    """用户的序列化类"""
+    id = serializers.IntegerField()
+    username = serializers.CharField(max_length=150)
+    mobile = serializers.CharField(max_length=11)
+
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'username', 'mobile')
 
 
 class SmsSerializer(serializers.Serializer):

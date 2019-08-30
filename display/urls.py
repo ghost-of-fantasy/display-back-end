@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from news.views import ArticleViewSet, CommentViewSet, TagViewSet
+from news.views import ArticleViewSet, TagViewSet
+from user_operation.views import CommentViewSet
+from users.views import UserViewSet
 
 router = routers.DefaultRouter()
 router.register(r'article', ArticleViewSet)  # 文章管理api
 router.register(r'comment', CommentViewSet)  # 评论管理api
 router.register(r'tag', TagViewSet)  # 评论管理api
+router.register(r'user', UserViewSet)  # 用户管理api
 
 # 后面执行的会覆盖前面执行的
 urlpatterns = [

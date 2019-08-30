@@ -9,17 +9,20 @@ django.setup()
 
 
 class Command(BaseCommand):
-    help = '用于生成假文章数据的命令'
+    help = '用于生成用户操作的假数据的命令'
 
     def add_arguments(self, parser):
-        parser.add_argument('--article_num', default=50, type=int, help='Quantity of article, default is 50')
+        parser.add_argument('--comment_num', default=500, type=int, help='Quantity of comment, default is 500')
 
     def handle(self, *args, **options):
-        from news.fakes import fake_article, fake_comment
+        from user_operation.fakes import fake_comment
 
         start_time = datetime.datetime.now()  # 放在程序开始处
-        click.echo('Generating the article...')
-        fake_article(options['article_num'])
+
+        click.echo('Generating the comment...')
+        fake_comment(options['comment_num'])
+
+        click.echo('Done')
 
         end_time = datetime.datetime.now()  # 放在程序结尾处
         interval = (end_time - start_time).seconds  # 以秒的形式

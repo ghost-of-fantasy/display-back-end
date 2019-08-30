@@ -9,12 +9,12 @@ class UserProfile(AbstractUser):
     """
     用户
     """
-    name = models.CharField(max_length=30, null=True, blank=True, verbose_name="姓名")
     mobile = models.CharField(null=True, blank=True, max_length=11, verbose_name="电话")
 
     class Meta:
         verbose_name = "用户"
         verbose_name_plural = verbose_name
+        ordering = ('id',)
 
     def __str__(self):
         return self.username

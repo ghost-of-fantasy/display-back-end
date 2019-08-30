@@ -5,9 +5,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
-from apps.news.filiters import ArticleFiliter, CommentFiliter
-from apps.news.models import Article, Comment
-from apps.news.serializers import ArticleSerializer, CommentSerializer, TagSerializer, \
+from apps.news.filiters import ArticleFiliter
+from apps.news.models import Article
+from apps.news.serializers import ArticleSerializer,  TagSerializer, \
     ArticleCreateSerializer
 from taggit.models import Tag
 
@@ -57,16 +57,5 @@ class TagViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
     def get_serializer_class(self):
         return TagSerializer
 
-
-class CommentViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
-    """评论管理API的视图"""
-    queryset = Comment.objects.all()
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('id', 'body')  # 搜索
-    ordering_fields = ('id', 'created')  # 排序
-    filter_class = CommentFiliter
-
-    def get_serializer_class(self):
-        return CommentSerializer
 
 
