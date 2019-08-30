@@ -4,9 +4,7 @@ from django.contrib.auth import get_user_model
 from datetime import datetime
 from datetime import timedelta
 from rest_framework.validators import UniqueValidator
-
 from .models import VerifyCode, UserProfile
-
 from display.settings import REGEX_MOBILE
 
 User = get_user_model()
@@ -17,6 +15,7 @@ class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     username = serializers.CharField(max_length=150)
     mobile = serializers.CharField(max_length=11)
+    email = serializers.CharField()
 
     class Meta:
         model = UserProfile
