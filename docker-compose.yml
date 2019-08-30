@@ -2,17 +2,14 @@ version: "3"
 
 services:
   db:
-    image: mysql:5
+    image: postgres:11.5-alpine
     container_name: gamenews_db
-    environment:
-      MYSQL_DATABASE: gamenews_db
-      MYSQL_ROOT_PASSWORD: 123456
     volumes:
-      - data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data/
+    env_file: .env
     restart: always
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
     ports:
-      - "3307:3306" # 将3306映射到3307, 供其他容器使用
+      - "5432:5432"
 
   web:
     build: .
@@ -20,9 +17,7 @@ services:
     volumes:
       - .:/usr/src/app
     command: python manage.py runserver 0.0.0.0:8000
-    environment:
-      - DEBUG=1
-      - SECRET_KEY=foo
+    env_file: .env
     ports:
       - "8000:8000"
     depends_on:
@@ -42,4 +37,4 @@ services:
     restart: always
 
 volumes:
-  data:
+  postgres_data:

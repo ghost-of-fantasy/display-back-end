@@ -23,10 +23,10 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!md+zuajnf8hchlu89qb50p!s96gp#7wmp328!ynjxd@o7%%kt'
+SECRET_KEY = os.environ.get('SECRET_KEY', '!md+zuajnf8hchlu89qb50p!s96gp#7wmp328!ynjxd@o7%%kt')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=1))
 
 ALLOWED_HOSTS = ['plrom.niracler.com']
 
@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'taggit',
-    'taggit_serializer',
 ]
 
 MIDDLEWARE = [
@@ -98,8 +97,12 @@ REST_FRAMEWORK = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.environ.get('SQL_DATABASE', 'gamenews_db'),
+        'USER': os.environ.get('SQL_USER', 'niracler'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', '123456'),
+        'HOST': os.environ.get('SQL_HOST', 'plrom.niracler.com'),
+        'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }
 

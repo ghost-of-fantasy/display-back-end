@@ -31,3 +31,4 @@ $ python manage.py forge_news # 使用自制命令来更为具体地生成假数
 - [Dockerizing Django with Postgres, Gunicorn, and Nginx](https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#.XVK2q93me6c.hackernews)
 - [Django Rest Framework Ordering on a SerializerMethodField](https://stackoverflow.com/questions/30041948/django-rest-framework-ordering-on-a-serializermethodfield)
 - [Django bulk_create with ignore rows that cause IntegrityError?](https://stackoverflow.com/questions/12451053/django-bulk-create-with-ignore-rows-that-cause-integrityerror)
+- [Environmental variables from .env file not available during local migrations in django, heroku](https://stackoverflow.com/questions/38437170/environmental-variables-from-env-file-not-available-during-local-migrations-in)
