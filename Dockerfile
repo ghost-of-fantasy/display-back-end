@@ -29,8 +29,14 @@ COPY requirements.txt ./
 
 RUN pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-# copy project
+# copy entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+
+## copy project
 #COPY . /usr/src/app/
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 
 #暴露端口8000，到时候执行docker run 的时候才好把宿主机端口映射到8000
 EXPOSE 8000
