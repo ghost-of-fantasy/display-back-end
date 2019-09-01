@@ -5,6 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
+from rest_framework.authentication import TokenAuthentication
 from apps.news.filiters import ArticleFiliter
 from apps.news.models import Article
 from apps.news.serializers import ArticleSerializer,  TagSerializer, \
@@ -53,6 +54,7 @@ class TagViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     pagination_class = TagsPagination
     ordering_fields = ('id', 'num_times')
+    authentication_classes = (TokenAuthentication, )
 
     def get_serializer_class(self):
         return TagSerializer
