@@ -47,7 +47,7 @@ class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
             return ArticleCreateSerializer
 
 
-class TagViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
+class TagViewSet(ListModelMixin, viewsets.GenericViewSet):
     """文章类型管理API的视图"""
     tag_queryset = Tag.objects.all()
     queryset = tag_queryset.annotate(num_times=Count('taggit_taggeditem_items'))
