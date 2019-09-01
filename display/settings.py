@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'taggit',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,12 @@ WSGI_APPLICATION = 'display.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # 设置分页函数
-    'PAGE_SIZE': 10  # 设置每页内容数
+    'PAGE_SIZE': 10,  # 设置每页内容数
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
 }
 
 # Database
@@ -155,4 +161,5 @@ JWT_AUTH = {
 
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
+# 邮件验证的API-Key
 API_KEY = "ab45b3863e40a0dcf70b731fb93e1ab1"
