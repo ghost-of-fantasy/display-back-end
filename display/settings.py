@@ -23,12 +23,14 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!md+zuajnf8hchlu89qb50p!s96gp#7wmp328!ynjxd@o7%%kt'
+SECRET_KEY = os.environ.get('SECRET_KEY', '!md+zuajnf8hchlu89qb50p!s96gp#7wmp328!ynjxd@o7%%kt')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=1))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['plrom.niracler.com']
+
+AUTH_USER_MODEL = 'users.UserProfile'
 
 # Application definition
 
@@ -39,9 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig',
+    'user_operation.apps.UserOperationConfig',
+    'news.apps.NewsConfig',
+    'rest_framework',
+    'django_filters',
+    'corsheaders',
+    'taggit',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True  # 允许跨域访问
 
 ROOT_URLCONF = 'display.urls'
 
@@ -72,13 +84,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'display.wsgi.application'
 
+# restframework
+# https://www.django-rest-framework.org/tutorial/quickstart/
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # 设置分页函数
+    'PAGE_SIZE': 10  # 设置每页内容数
+}
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.environ.get('SQL_DATABASE', 'gamenews_db'),
+        'USER': os.environ.get('SQL_USER', 'niracler'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', '123456'),
+        'HOST': os.environ.get('SQL_HOST', 'plrom.niracler.com'),
+        'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }
 
@@ -111,9 +135,24 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = True  # 时区支持，根据时区显示时间
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+import datetime
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'Token',
+}
+
+REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+
+API_KEY = "ab45b3863e40a0dcf70b731fb93e1ab1"
