@@ -37,7 +37,7 @@ urlpatterns = [
     # # drf自带的token认证机制
     # path('api-token-auth/', views.obtain_auth_token),
 
-    path('api-token-auth/', obtain_jwt_token),
+    path('login/', obtain_jwt_token),
 
     path('api/', include(router.urls)),
 ]

@@ -1,11 +1,8 @@
 from django.db.models import Count
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User, Group
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
-from rest_framework.authentication import TokenAuthentication
 from apps.news.filiters import ArticleFiliter
 from apps.news.models import Article
 from apps.news.serializers import ArticleSerializer,  TagSerializer, \
