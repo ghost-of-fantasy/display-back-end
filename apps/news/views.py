@@ -11,6 +11,7 @@ from apps.news.models import Article
 from apps.news.serializers import ArticleSerializer,  TagSerializer, \
     ArticleCreateSerializer
 from taggit.models import Tag
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 # Create your views here.
@@ -54,7 +55,7 @@ class TagViewSet(ListModelMixin, viewsets.GenericViewSet):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     pagination_class = TagsPagination
     ordering_fields = ('id', 'num_times')
-    authentication_classes = (TokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication, )
 
     def get_serializer_class(self):
         return TagSerializer
