@@ -162,3 +162,7 @@ REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 # 邮件验证的API-Key
 API_KEY = "ab45b3863e40a0dcf70b731fb93e1ab1"
+
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
