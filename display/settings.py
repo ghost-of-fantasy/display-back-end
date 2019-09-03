@@ -161,7 +161,7 @@ JWT_AUTH = {
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 # 邮件验证的API-Key
-API_KEY = "ab45b3863e40a0dcf70b731fb93e1ab1"
+API_KEY = os.environ.get('API_KEY', "21c729af3ed2a927078e484256f1491f"),
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
