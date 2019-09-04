@@ -26,7 +26,7 @@ router = routers.DefaultRouter()
 router.register(r'article', ArticleViewSet, base_name='article')  # 文章管理api
 router.register(r'comment', CommentViewSet, base_name='comment')  # 评论管理api
 router.register(r'tag', TagViewSet, base_name='tag')  # 评论管理api
-router.register(r'user', UserViewSet, base_name='user')  # 用户管理api
+router.register(r'register', UserViewSet, base_name='register')  # 用户管理api
 router.register(r'code', SmsCodeViewSet, base_name="code")  # 验证码api
 
 # 后面执行的会覆盖前面执行的

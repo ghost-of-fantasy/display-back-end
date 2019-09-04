@@ -70,12 +70,7 @@ class UserRegSerializer(serializers.ModelSerializer):
         return user
 
     def validate_code(self, code):
-        # try:
-        #     verify_records = VerifyCode.objects.get(mobile=self.initial_data["username"], code=code)
-        # except VerifyCode.DoesNotExist as e:
-        #     pass
-        # except VerifyCode.MultipleObjectsReturned as e:
-        #     pass
+
         verify_records = VerifyCode.objects.filter(mobile=self.initial_data["mobile"]).order_by("-add_time")
         if verify_records:
             last_record = verify_records[0]
@@ -92,6 +87,7 @@ class UserRegSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         attrs["mobile"] = attrs["mobile"]
+
         del attrs["code"]
         return attrs
 
