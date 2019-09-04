@@ -20,13 +20,14 @@ from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 from news.views import ArticleViewSet, TagViewSet
 from user_operation.views import CommentViewSet
-from users.views import UserViewSet
+from users.views import UserViewSet, SmsCodeViewSet
 
 router = routers.DefaultRouter()
-router.register(r'article', ArticleViewSet)  # 文章管理api
-router.register(r'comment', CommentViewSet)  # 评论管理api
-router.register(r'tag', TagViewSet)  # 评论管理api
-router.register(r'user', UserViewSet)  # 用户管理api
+router.register(r'article', ArticleViewSet, base_name='article')  # 文章管理api
+router.register(r'comment', CommentViewSet, base_name='comment')  # 评论管理api
+router.register(r'tag', TagViewSet, base_name='tag')  # 评论管理api
+router.register(r'user', UserViewSet, base_name='user')  # 用户管理api
+router.register(r'code', SmsCodeViewSet, base_name="code")  # 验证码api
 
 # 后面执行的会覆盖前面执行的
 urlpatterns = [
