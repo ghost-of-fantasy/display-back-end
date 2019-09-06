@@ -19,7 +19,7 @@ from rest_framework import routers
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 from news.views import ArticleViewSet, TagViewSet
-from user_operation.views import CommentViewSet
+from user_operation.views import CommentViewSet, UserFavViewSet
 from users.views import UserViewSet, SmsCodeViewSet
 
 router = routers.DefaultRouter()
@@ -28,6 +28,7 @@ router.register(r'comment', CommentViewSet, base_name='comment')  # 评论管理
 router.register(r'tag', TagViewSet, base_name='tag')  # 评论管理api
 router.register(r'register', UserViewSet, base_name='register')  # 用户管理api
 router.register(r'code', SmsCodeViewSet, base_name="code")  # 验证码api
+router.register(r'userfav', UserFavViewSet, base_name="userfav")  # 用户收藏api
 
 # 后面执行的会覆盖前面执行的
 urlpatterns = [

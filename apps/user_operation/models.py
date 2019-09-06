@@ -15,11 +15,13 @@ class UserFav(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="用户")
     article = models.ForeignKey(Article, on_delete=models.DO_NOTHING, verbose_name="文章")
-    created = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+    created = models.DateTimeField(default=timezone.now, verbose_name="添加时间")
 
     class Meta:
+        ordering = ('-created',)
         verbose_name = "用户收藏"
         verbose_name_plural = verbose_name
+        unique_together = ("user", "article")
 
     def __str__(self):
         return self.user.name
