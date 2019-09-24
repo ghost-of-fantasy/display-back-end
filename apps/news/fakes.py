@@ -13,7 +13,7 @@
 import random
 import pytz
 from faker import Faker
-from apps.news.models import Article, Comment
+from apps.news.models import Article
 
 fake = Faker("zh_CN")
 

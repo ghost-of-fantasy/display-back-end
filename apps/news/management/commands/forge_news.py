@@ -15,7 +15,7 @@ class Command(BaseCommand):
         parser.add_argument('--article_num', default=50, type=int, help='Quantity of article, default is 50')
 
     def handle(self, *args, **options):
-        from news.fakes import fake_article, fake_comment
+        from news.fakes import fake_article
 
         start_time = datetime.datetime.now()  # 放在程序开始处
         click.echo('Generating the article...')

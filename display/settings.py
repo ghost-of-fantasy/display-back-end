@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '!md+zuajnf8hchlu89qb50p!s96gp#7wmp328
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=1))
 
-ALLOWED_HOSTS = ['plrom.niracler.com']
+ALLOWED_HOSTS = ['plrom.niracler.com', 'centos-l3-vm-02.niracler.com']
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'taggit',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,11 @@ WSGI_APPLICATION = 'display.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # 设置分页函数
-    'PAGE_SIZE': 10  # 设置每页内容数
+    'PAGE_SIZE': 10,  # 设置每页内容数
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
 }
 
 # Database
@@ -97,8 +102,8 @@ REST_FRAMEWORK = {
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('SQL_DATABASE', 'gamenews_db'),
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
         'USER': os.environ.get('SQL_USER', 'niracler'),
         'PASSWORD': os.environ.get('SQL_PASSWORD', '123456'),
         'HOST': os.environ.get('SQL_HOST', 'plrom.niracler.com'),
@@ -155,4 +160,9 @@ JWT_AUTH = {
 
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
-API_KEY = "ab45b3863e40a0dcf70b731fb93e1ab1"
+# 云片网手机验证的API-Key
+API_KEY = os.environ.get('API_KEY', "21c729af3ed2a927078e484256f1491f"),
+
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)

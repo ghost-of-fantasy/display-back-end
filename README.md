@@ -6,15 +6,23 @@
 后台管理页面
 ![后台管理页面](docs/img/demo.png)
 
-## 安装(开发环境)
+API接口
+![API接口](docs/img/api.png)
+
+## 安装(开发环境,测试用)
 
 ```shell script
 $ python manage.py makemigrations # 创建初始迁移
 $ python manage.py migrate # 数据库据迁移
 $ python manage.py runserver  0.0.0.0:8000 --settings=display.settings # 运行
 $ python manage.py createsuperuser # 创建超级用户
-$ python manage.py seed api --number=15 # 生成假数据
-$ python manage.py forge_news # 使用自制命令来更为具体地生成假数据
+```
+
+## 安装(生产环境)
+
+```shell script
+$ docker-compose build # 构建镜像
+$ docker-compose up -d # 启动
 ```
 
 > 密码：dgutdev#
@@ -32,3 +40,4 @@ $ python manage.py forge_news # 使用自制命令来更为具体地生成假数
 - [Django Rest Framework Ordering on a SerializerMethodField](https://stackoverflow.com/questions/30041948/django-rest-framework-ordering-on-a-serializermethodfield)
 - [Django bulk_create with ignore rows that cause IntegrityError?](https://stackoverflow.com/questions/12451053/django-bulk-create-with-ignore-rows-that-cause-integrityerror)
 - [Environmental variables from .env file not available during local migrations in django, heroku](https://stackoverflow.com/questions/38437170/environmental-variables-from-env-file-not-available-during-local-migrations-in)
+- [COPY with docker but with exclusion](https://stackoverflow.com/questions/43747776/copy-with-docker-but-with-exclusion)

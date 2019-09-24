@@ -14,8 +14,6 @@ services:
   web:
     build: .
     container_name: gamenews_web
-    volumes:
-      - .:/usr/src/app
     command: gunicorn display.wsgi:application --bind 0.0.0.0:8000 -w4
     env_file: .env
     depends_on:

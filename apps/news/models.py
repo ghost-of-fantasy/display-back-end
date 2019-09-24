@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from taggit.managers import TaggableManager
 
+
 class Article(models.Model):
     """文章"""
     STATUS_CHOICES = (
@@ -17,7 +18,7 @@ class Article(models.Model):
     publish_time = models.DateTimeField(default=timezone.now, verbose_name='发布时间')
     created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='published', verbose_name='状态')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft', verbose_name='状态')
     tags = TaggableManager()
 
     class Meta:
@@ -27,5 +28,3 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
-
-
