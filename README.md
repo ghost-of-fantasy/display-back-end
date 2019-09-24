@@ -16,8 +16,6 @@ $ python manage.py makemigrations # 创建初始迁移
 $ python manage.py migrate # 数据库据迁移
 $ python manage.py runserver  0.0.0.0:8000 --settings=display.settings # 运行
 $ python manage.py createsuperuser # 创建超级用户
-$ python manage.py forge_news # 生成新闻的假数据
-$ python manage.py forge_user_operation # 生成用户行为的假数据
 ```
 
 ## 安装(生产环境)

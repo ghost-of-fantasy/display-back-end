@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '!md+zuajnf8hchlu89qb50p!s96gp#7wmp328
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=1))
 
-ALLOWED_HOSTS = ['plrom.niracler.com']
+ALLOWED_HOSTS = ['plrom.niracler.com', 'centos-l3-vm-02.niracler.com']
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -160,7 +160,7 @@ JWT_AUTH = {
 
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
-# 邮件验证的API-Key
+# 云片网手机验证的API-Key
 API_KEY = os.environ.get('API_KEY', "21c729af3ed2a927078e484256f1491f"),
 
 AUTHENTICATION_BACKENDS = (
