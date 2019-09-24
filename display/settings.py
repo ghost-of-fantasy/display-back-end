@@ -166,3 +166,11 @@ API_KEY = os.environ.get('API_KEY', "21c729af3ed2a927078e484256f1491f"),
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
+
+ADMINS = (
+    (
+        os.environ.get('ADMIN_NAME', "admin"),
+        os.environ.get('ADMIN_EMAIL', 'admin@mysite.com'),
+        os.environ.get('ADMIN_PASSWORD', '123456'),
+    ),
+)

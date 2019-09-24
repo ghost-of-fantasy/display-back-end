@@ -25,7 +25,25 @@ $ python3 manage.py createsuperuser # 创建超级用户
 
 ## 安装(生产环境)
 
+```shell script
+$ nano .env
+```
 
+```.env
+# 数据库配置
+POSTGRES_USER=demo
+POSTGRES_PASSWORD=123456
+POSTGRES_DB=demo_db
+SQL_ENGINE=django.db.backends.postgresql
+SQL_HOST=db
+SQL_PORT=5432
+DATABASE=postgres
+
+#初始超级用户配置
+ADMIN_NAME = admin
+ADMIN_EMAIL = admin@example.com
+ADMIN_PASSWORD = 123456
+```
 
 ```shell script
 $ docker-compose build # 构建镜像
@@ -48,3 +66,4 @@ $ docker-compose up -d # 启动
 - [Django bulk_create with ignore rows that cause IntegrityError?](https://stackoverflow.com/questions/12451053/django-bulk-create-with-ignore-rows-that-cause-integrityerror)
 - [Environmental variables from .env file not available during local migrations in django, heroku](https://stackoverflow.com/questions/38437170/environmental-variables-from-env-file-not-available-during-local-migrations-in)
 - [COPY with docker but with exclusion](https://stackoverflow.com/questions/43747776/copy-with-docker-but-with-exclusion)
+- [Create django super user in a docker container without inputting password](https://stackoverflow.com/questions/30027203/create-django-super-user-in-a-docker-container-without-inputting-password)

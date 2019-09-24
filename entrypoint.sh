@@ -13,6 +13,7 @@ fi
 
 ## 这该死的删库命令
 #python manage.py flush --no-input
+python manage.py initadmin
 python manage.py migrate
 python manage.py collectstatic --no-input --clear
 
