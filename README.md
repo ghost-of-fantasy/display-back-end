@@ -11,14 +11,21 @@ API接口
 
 ## 安装(开发环境,测试用)
 
+这里只是写个大致的，依赖什么的肯定是要先安装的吧？这种方法还是很坑的,因为不同地方的环境都极其不一样,推荐使用docker
+
 ```shell script
-$ python manage.py makemigrations # 创建初始迁移
-$ python manage.py migrate # 数据库据迁移
-$ python manage.py runserver  0.0.0.0:8000 --settings=display.settings # 运行
-$ python manage.py createsuperuser # 创建超级用户
+$ git clone https://github.com/ghost-of-fantasy/display-back-end.git gamenewsb # git 克隆仓库
+$ cd gamenewsb # 进入项目目录
+$ pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+$ python3 manage.py makemigrations # 创建初始迁移
+$ python3 manage.py migrate # 数据库据迁移
+$ python3 manage.py runserver  0.0.0.0:8000 --settings=display.settings # 运行
+$ python3 manage.py createsuperuser # 创建超级用户
 ```
 
 ## 安装(生产环境)
+
+
 
 ```shell script
 $ docker-compose build # 构建镜像

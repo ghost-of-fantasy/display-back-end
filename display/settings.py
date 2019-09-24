@@ -103,10 +103,10 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': os.environ.get('SQL_USER', 'niracler'),
-        'PASSWORD': os.environ.get('SQL_PASSWORD', '123456'),
-        'HOST': os.environ.get('SQL_HOST', 'plrom.niracler.com'),
+        'NAME': os.environ.get('POSTGRES_DB', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get('POSTGRES_USER', 'niracler'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '123456'),
+        'HOST': os.environ.get('SQL_HOST', 'db'),
         'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }
