@@ -114,3 +114,7 @@ cookie.json
 *.csv
 
 media/
+
+static/
+
+migrations/
