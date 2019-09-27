@@ -1,6 +1,15 @@
 version: "3"
 
 services:
+  redis:
+    image: redis
+    container_name: gamenews_redis
+    volumes:
+      - redis_data:/data
+    command: --appendonly yes --requirepass "123456"
+    restart: always
+    ports:
+      - "6378:6379"
   db:
     image: postgres:11.5-alpine
     container_name: gamenews_db
@@ -36,3 +45,4 @@ services:
 
 volumes:
   postgres_data:
+  redis_data:

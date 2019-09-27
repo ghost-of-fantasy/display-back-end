@@ -2,13 +2,15 @@ from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, status
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, \
+    UpdateModelMixin
 from apps.news.filiters import ArticleFiliter
 from apps.news.models import Article
-from apps.news.serializers import ArticleSerializer,  TagSerializer, \
+from apps.news.serializers import ArticleSerializer, TagSerializer, \
     ArticleCreateSerializer
 from taggit.models import Tag
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 
 # Create your views here.
@@ -29,7 +31,7 @@ class TagsPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin, RetrieveModelMixin):
+class ArticleViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet, CreateModelMixin, RetrieveModelMixin):
     """文章管理API的视图"""
     queryset = Article.objects.all()
     pagination_class = ArticlePagination  # 分页函数
@@ -45,17 +47,14 @@ class ArticleViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin, 
             return ArticleCreateSerializer
 
 
-class TagViewSet(ListModelMixin, viewsets.GenericViewSet):
+class TagViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet):
     """文章类型管理API的视图"""
     tag_queryset = Tag.objects.all()
     queryset = tag_queryset.annotate(num_times=Count('taggit_taggeditem_items'))
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     pagination_class = TagsPagination
     ordering_fields = ('id', 'num_times')
-    authentication_classes = (JSONWebTokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication,)
 
     def get_serializer_class(self):
         return TagSerializer
-
-
-
