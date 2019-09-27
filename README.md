@@ -13,6 +13,8 @@ API接口
 
 这里只是写个大致的，依赖什么的肯定是要先安装的吧？这种方法还是很坑的,因为不同地方的环境都极其不一样,推荐使用docker
 
+在此之前，你还要启动一个redis
+
 ```shell script
 $ git clone https://github.com/ghost-of-fantasy/display-back-end.git gamenewsb # git 克隆仓库
 $ cd gamenewsb # 进入项目目录
@@ -39,10 +41,13 @@ SQL_HOST=db
 SQL_PORT=5432
 DATABASE=postgres
 
-#初始超级用户配置
+# 初始超级用户配置
 ADMIN_NAME = admin
 ADMIN_EMAIL = admin@example.com
 ADMIN_PASSWORD = 123456
+
+# 配置redis
+CACHES_BACKEND=django_redis.cache.RedisCache
 ```
 
 ```shell script
@@ -50,7 +55,9 @@ $ docker-compose build # 构建镜像
 $ docker-compose up -d # 启动
 ```
 
-> 密码：dgutdev#
+## Features
+
+ - 添加展示页面的缓存 300ms > 10ms
 
 ## 参考文章
 - [django-seed 用于生成假数据](https://github.com/Brobin/django-seed)

@@ -167,6 +167,7 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
 
+# 默认的管理员
 ADMINS = (
     (
         os.environ.get('ADMIN_NAME', "admin"),
@@ -174,3 +175,19 @@ ADMINS = (
         os.environ.get('ADMIN_PASSWORD', '123456'),
     ),
 )
+
+# 缓存设置
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60
+}
+
+# 使用redis缓存
+CACHES = {
+    "default": {
+        "BACKEND":  os.environ.get('CACHES_BACKEND', 'django.core.cache.backends.locmem.LocMemCache'),
+        "LOCATION": os.environ.get('REDIS_HOST', 'redis://root:123456@redis:6379'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
