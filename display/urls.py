@@ -21,6 +21,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from news.views import ArticleViewSet, TagViewSet
 from user_operation.views import CommentViewSet, UserFavViewSet
 from users.views import UserViewSet, SmsCodeViewSet
+from django.urls import path
 
 router = routers.DefaultRouter()
 router.register(r'article', ArticleViewSet, base_name='article')  # 文章管理api
@@ -40,6 +41,5 @@ urlpatterns = [
     # path('api-token-auth/', views.obtain_auth_token),
 
     path('login/', obtain_jwt_token),
-
     path('api/', include(router.urls)),
 ]
