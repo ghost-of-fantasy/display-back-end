@@ -9,6 +9,13 @@
 API接口
 ![API接口](docs/img/api.png)
 
+## 下载项目
+
+```shell script
+$ git clone https://github.com/ghost-of-fantasy/display-back-end.git gamenewsb # git 克隆仓库
+$ cd gamenewsb # 进入项目目录
+```
+
 ## 安装(开发环境,测试用)
 
 这里只是写个大致的，依赖什么的肯定是要先安装的吧？这种方法还是很坑的,因为不同地方的环境都极其不一样,推荐使用docker
@@ -16,8 +23,6 @@ API接口
 在此之前，你还要启动一个redis
 
 ```shell script
-$ git clone https://github.com/ghost-of-fantasy/display-back-end.git gamenewsb # git 克隆仓库
-$ cd gamenewsb # 进入项目目录
 $ pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 $ python3 manage.py makemigrations # 创建初始迁移
 $ python3 manage.py migrate # 数据库据迁移
