@@ -79,3 +79,4 @@ $ docker-compose up -d # 启动
 - [Environmental variables from .env file not available during local migrations in django, heroku](https://stackoverflow.com/questions/38437170/environmental-variables-from-env-file-not-available-during-local-migrations-in)
 - [COPY with docker but with exclusion](https://stackoverflow.com/questions/43747776/copy-with-docker-but-with-exclusion)
 - [Create django super user in a docker container without inputting password](https://stackoverflow.com/questions/30027203/create-django-super-user-in-a-docker-container-without-inputting-password)
+- [Celery - Distributed Task Queue](http://docs.celeryproject.org/en/latest/index.html)
