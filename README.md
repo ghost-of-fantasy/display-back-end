@@ -80,3 +80,5 @@ $ docker-compose up -d # 启动
 - [COPY with docker but with exclusion](https://stackoverflow.com/questions/43747776/copy-with-docker-but-with-exclusion)
 - [Create django super user in a docker container without inputting password](https://stackoverflow.com/questions/30027203/create-django-super-user-in-a-docker-container-without-inputting-password)
 - [Celery - Distributed Task Queue](http://docs.celeryproject.org/en/latest/index.html)
+- [Dealing with nginx 400 “The plain HTTP request was sent to HTTPS port” error
+](https://stackoverflow.com/questions/8768946/dealing-with-nginx-400-the-plain-http-request-was-sent-to-https-port-error)
