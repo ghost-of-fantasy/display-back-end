@@ -118,3 +118,6 @@ media/
 static/
 
 migrations/
+
+nginx/cert/gamenews.key
+nginx/cert/gamenews.pem

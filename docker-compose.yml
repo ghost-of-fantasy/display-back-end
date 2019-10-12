@@ -44,7 +44,7 @@ services:
     build: ./nginx
     container_name: gamenews_nginx
     ports:
-      - "8000:80"
+      - "8000:8000"
     volumes:
       - ./static:/usr/share/nginx/html/static
       - ./media:/usr/share/nginx/html/media
