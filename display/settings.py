@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '!md+zuajnf8hchlu89qb50p!s96gp#7wmp328
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=1))
 
-ALLOWED_HOSTS = ['plrom.niracler.com', 'centos-l3-vm-02.niracler.com', 'gamenews.niracler.com']
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
