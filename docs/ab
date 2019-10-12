@@ -47,3 +47,55 @@ Percentage of the requests served within a certain time (ms)
   98%  13542
   99%  13618
  100%  13654 (longest request)
+
+ab -n 500 -c 100 http://plrom.niracler.com:8000/api/article/\?p\=101\&page_size\=100
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking plrom.niracler.com (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Finished 500 requests
+
+
+Server Software:        nginx/1.17.3
+Server Hostname:        plrom.niracler.com
+Server Port:            8000
+
+Document Path:          /api/article/?p=101&page_size=100
+Document Length:        317947 bytes
+
+Concurrency Level:      100
+Time taken for tests:   2.032 seconds
+Complete requests:      500
+Failed requests:        0
+Total transferred:      159096000 bytes
+HTML transferred:       158973500 bytes
+Requests per second:    246.04 [#/sec] (mean)
+Time per request:       406.446 [ms] (mean)
+Time per request:       4.064 [ms] (mean, across all concurrent requests)
+Transfer rate:          76451.58 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   1.0      0       4
+Processing:     7  147  61.2    159    1235
+Waiting:        7  146  61.1    158    1230
+Total:         11  148  60.7    159    1235
+WARNING: The median and mean for the initial connection time are not within a normal deviation
+        These results are probably not that reliable.
+
+Percentage of the requests served within a certain time (ms)
+  50%    159
+  66%    162
+  75%    163
+  80%    164
+  90%    167
+  95%    168
+  98%    170
+  99%    173
+ 100%   1235 (longest request)

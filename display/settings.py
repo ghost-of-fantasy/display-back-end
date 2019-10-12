@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os, sys
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'taggit',
     'rest_framework.authtoken',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -184,7 +188,7 @@ REST_FRAMEWORK_EXTENSIONS = {
 # 使用redis缓存
 CACHES = {
     "default": {
-        "BACKEND":  os.environ.get('CACHES_BACKEND', 'django.core.cache.backends.locmem.LocMemCache'),
+        "BACKEND": os.environ.get('CACHES_BACKEND', 'django.core.cache.backends.locmem.LocMemCache'),
         "LOCATION": os.environ.get('REDIS_HOST', 'redis://root:123456@redis:6379'),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
@@ -192,10 +196,13 @@ CACHES = {
     }
 }
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
+# 关于sentry错误日志管理的api
 sentry_sdk.init(
     dsn=os.environ.get('DSN'),
     integrations=[DjangoIntegration()]
 )
+
+# 关于Celery的配置
+# CELERY_BROKER_URL = os.environ.get('BROKER_URL')
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
