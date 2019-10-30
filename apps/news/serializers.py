@@ -1,6 +1,5 @@
 from django.db.models import Count
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 from taggit.models import Tag
 from .models import Article
 
@@ -50,14 +49,26 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
         fields = ("title", "content", 'url', 'tags', 'website_name', 'publish_time')
 
     def create(self, validated_data):
-        article, created = Article.objects.update_or_create(
-            title=validated_data['title'],
-            content=validated_data['content'],
-            url=validated_data['url'],
-            website_name=validated_data['website_name'],
-            publish_time=validated_data['publish_time']
-        )
+
         # 添加的时候 假如有 且draft 直接更新
+        try:
+            item = Article.objects.get(url=validated_data['url'])
+            if item.status == 'published':
+                raise serializers.ValidationError('已经发布，无法更新')
+        except Exception as e:  # 没有这个对象
+            if isinstance(e, serializers.ValidationError):
+                raise e
+
+        article, created = Article.objects.update_or_create(
+            url=validated_data['url'],
+            defaults={
+                'url': validated_data['url'],
+                'title': validated_data['title'],
+                'content': validated_data['content'],
+                'website_name': validated_data['website_name'],
+                'publish_time': validated_data['publish_time'],
+            }
+        )
 
         try:
             tags = validated_data['tags']
