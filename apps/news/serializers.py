@@ -40,8 +40,7 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(label="文章标题", help_text="文章标题", required=True, allow_blank=False)
     content = serializers.CharField(label="文章内容", help_text="文章内容", required=True, allow_blank=False)
-    url = serializers.CharField(label="文章链接", help_text="文章链接", required=True, allow_blank=False,
-                                validators=[UniqueValidator(queryset=Article.objects.all(), message="该链接的文章已经存在")])
+    url = serializers.CharField(label="文章链接", help_text="文章链接", required=True, allow_blank=False)
     tags = serializers.CharField(label="文章标签", help_text="文章标签", required=False)
     website_name = serializers.CharField(label="文章来源网站", required=True)
     publish_time = serializers.DateTimeField(label="发表时间", required=True)
@@ -51,14 +50,15 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
         fields = ("title", "content", 'url', 'tags', 'website_name', 'publish_time')
 
     def create(self, validated_data):
-        article = Article(
+        article, created = Article.objects.update_or_create(
             title=validated_data['title'],
             content=validated_data['content'],
             url=validated_data['url'],
             website_name=validated_data['website_name'],
             publish_time=validated_data['publish_time']
         )
-        article.save()
+        # 添加的时候 假如有 且draft 直接更新
+
         try:
             tags = validated_data['tags']
             for tag in tags.split(' '):
@@ -69,5 +69,3 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
             article.tags = ""
 
         return article
-
-
