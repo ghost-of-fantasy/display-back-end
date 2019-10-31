@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.7.4-alpine
+FROM python:3.7-alpine
 
 #设置时区
 ENV TZ "Asia/Shanghai"
@@ -21,7 +21,7 @@ RUN apk update \
     && apk add --virtual build-deps gcc python3-dev musl-dev \
     && apk add postgresql-dev \
     && pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    && pip install psycopg2-binary -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    && pip install psycopg2-binary==2.8.3 -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && apk del build-deps
 
 #install any needed pacakges in requirements.txt，你要把所有需要安装的Python模块加到这文件中。

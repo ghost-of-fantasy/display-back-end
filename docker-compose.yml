@@ -24,6 +24,7 @@ services:
     container_name: gamenews_rabbit
     image: rabbitmq:3.8.0-management-alpine
     env_file: .env
+    restart: always
     ports:
       - "5672:5672"
       - "15672:15672"  # here, we can access rabbitmq management plugin
@@ -38,6 +39,7 @@ services:
     depends_on:
       - db
       - redis
+      - rabbit
     restart: always
 
   nginx:
