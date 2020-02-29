@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.views.static import serve
+from display.settings import MEDIA_ROOT, STATIC_ROOT
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
@@ -22,6 +24,7 @@ from news.views import ArticleViewSet, TagViewSet
 from user_operation.views import CommentViewSet, UserFavViewSet
 from users.views import UserViewSet, SmsCodeViewSet
 from django.urls import path
+from django.conf.urls import url
 
 router = routers.DefaultRouter()
 router.register(r'article', ArticleViewSet, base_name='article')  # 文章管理api
@@ -39,7 +42,8 @@ urlpatterns = [
 
     # # drf自带的token认证机制
     # path('api-token-auth/', views.obtain_auth_token),
-
+    url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
     path('login/', obtain_jwt_token),
     path('api/', include(router.urls)),
 ]
