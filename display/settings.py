@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'user_operation.apps.UserOperationConfig',
     'news.apps.NewsConfig',
-    'games.apps.GamesConfig',
     'rest_framework',
     'django_filters',
     'corsheaders',
