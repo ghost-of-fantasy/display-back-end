@@ -1,4 +1,5 @@
 # display-back-end
+
 展示模块的后端部分
 
 ## 效果
@@ -12,28 +13,41 @@ API接口
 ## 下载项目
 
 ```shell script
-$ git clone https://github.com/ghost-of-fantasy/display-back-end.git gamenewsb # git 克隆仓库
-$ cd gamenewsb # 进入项目目录
+git clone https://github.com/ghost-of-fantasy/display-back-end.git gamenewsb # git 克隆仓库
+cd gamenewsb # 进入项目目录
 ```
 
 ## 安装(开发环境,测试用)
 
 这里只是写个大致的，依赖什么的肯定是要先安装的吧？这种方法还是很坑的,因为不同地方的环境都极其不一样,推荐使用docker
 
+构建数据库
+
+```shell script
+docker-compose up db
+```
+
+创建并进入虚拟环境
+
+```shell script
+virtualenv --no-site-packages venv
+source venv/bin/activate
+```
+
 在此之前，你还要启动一个redis
 
 ```shell script
-$ pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-$ python3 manage.py makemigrations # 创建初始迁移
-$ python3 manage.py migrate # 数据库据迁移
-$ python3 manage.py runserver  0.0.0.0:8000 --settings=display.settings # 运行
-$ python3 manage.py createsuperuser # 创建超级用户
+pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+python3 manage.py makemigrations # 创建初始迁移
+python3 manage.py migrate # 数据库据迁移
+python3 manage.py runserver  0.0.0.0:8000 --settings=display.settings # 运行
+python3 manage.py createsuperuser # 创建超级用户
 ```
 
 ## 安装(生产环境)
 
 ```shell script
-$ nano .env
+nano .env
 ```
 
 ```.env
@@ -56,15 +70,16 @@ CACHES_BACKEND=django_redis.cache.RedisCache
 ```
 
 ```shell script
-$ docker-compose build # 构建镜像
-$ docker-compose up -d # 启动
+docker-compose build # 构建镜像
+docker-compose up -d # 启动
 ```
 
 ## Features
 
- - 添加展示页面的缓存 300ms > 10ms
+- 添加展示页面的缓存 300ms > 10ms
 
 ## 参考文章
+
 - [django-seed 用于生成假数据](https://github.com/Brobin/django-seed)
 - [编写自定义 django-admin 命令](https://docs.djangoproject.com/zh-hans/2.2/howto/custom-management-commands/)
 - [Django 2.0 Tutorials | 09 | Generate Fake Data | Faker](https://www.youtube.com/watch?v=Nq5JXFpQ2jE&list=PLR2qQy0Zxs_XXgPZvuPcOZPvAiswqwpjf&index=9)

@@ -8,13 +8,15 @@ services:
       - redis_data:/data
     command: --appendonly yes --requirepass "123456"
     restart: always
+    ports:
+      - "6379:6379"
 
   db:
     image: postgres:11.5-alpine
     container_name: gamenews_db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file: .env
+    env_file: pro.env
     restart: always
     ports:
       - "5432:5432"
@@ -23,7 +25,7 @@ services:
   rabbit:
     container_name: gamenews_rabbit
     image: rabbitmq:3.8.0-management-alpine
-    env_file: .env
+    env_file: pro.env
     restart: always
     ports:
       - "5672:5672"
@@ -35,23 +37,24 @@ services:
     command: gunicorn display.wsgi:application --bind 0.0.0.0:8000 -w4
     volumes:
       - .:/usr/src/app/
-    env_file: .env
+    env_file: pro.env
     depends_on:
       - db
       - redis
       - rabbit
     restart: always
-
-  nginx:
-    build: ./nginx
-    container_name: gamenews_nginx
     ports:
       - "8000:8000"
+
+  frpc:
+    image: snowdreamtech/frpc
+    container_name: gamenews_frpc
     volumes:
-      - ./static:/usr/share/nginx/html/static
-      - ./media:/usr/share/nginx/html/media
+      - "./frpc/frpc.ini:/etc/frp/frpc.ini"
     restart: always
 
 volumes:
   postgres_data:
   redis_data:
+  static:
+  media:
