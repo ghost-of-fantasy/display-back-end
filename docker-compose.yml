@@ -58,3 +58,8 @@ volumes:
   redis_data:
   static:
   media:
+
+networks:
+  default:
+    external:
+      name: gamenews_network
