@@ -15,18 +15,10 @@ from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 # Create your views here.
 
-class ArticlePagination(PageNumberPagination):
+class Pagination(PageNumberPagination):
     """用于文章内容API分页的类"""
     page_size = 10
-    page_size_query_param = 'page_size'
-    page_query_param = 'p'
-    max_page_size = 100
-
-
-class TagsPagination(PageNumberPagination):
-    """用于文章内容API分页的类"""
-    page_size = 30
-    page_size_query_param = 'page_size'
+    page_size_query_param = 'ps'
     page_query_param = 'p'
     max_page_size = 100
 
@@ -34,7 +26,7 @@ class TagsPagination(PageNumberPagination):
 class ArticleViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet, CreateModelMixin, RetrieveModelMixin):
     """文章管理API的视图"""
     queryset = Article.objects.all()
-    pagination_class = ArticlePagination  # 分页函数
+    pagination_class = Pagination  # 分页函数
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_class = ArticleFiliter
     search_fields = ('id', 'content')  # 搜索
@@ -52,7 +44,7 @@ class TagViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet):
     tag_queryset = Tag.objects.all()
     queryset = tag_queryset.annotate(num_times=Count('taggit_taggeditem_items'))
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    pagination_class = TagsPagination
+    pagination_class = Pagination
     ordering_fields = ('id', 'num_times')
     authentication_classes = (JSONWebTokenAuthentication,)
 
