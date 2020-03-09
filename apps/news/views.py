@@ -23,7 +23,7 @@ class Pagination(PageNumberPagination):
     max_page_size = 100
 
 
-class ArticleViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet, CreateModelMixin, RetrieveModelMixin):
+class ArticleViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin):
     """文章管理API的视图"""
     queryset = Article.objects.all()
     pagination_class = Pagination  # 分页函数
@@ -33,10 +33,10 @@ class ArticleViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet
     ordering_fields = ('id', 'publish_time', 'created')  # 排序
 
     def get_serializer_class(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            return ArticleSerializer
-        elif self.action == 'create':
+        if self.action == 'create':
             return ArticleCreateSerializer
+        else :
+            return ArticleSerializer
 
 
 class TagViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet):
