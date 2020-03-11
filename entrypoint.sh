@@ -13,7 +13,6 @@ fi
 
 ## 这该死的删库命令
 #python manage.py flush --no-input
-celery -A display worker -l info &
 python3 manage.py makemigrations
 python manage.py migrate
 python manage.py initadmin

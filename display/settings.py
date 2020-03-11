@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'taggit',
     'rest_framework.authtoken',
-    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -201,8 +200,3 @@ sentry_sdk.init(
     dsn=os.environ.get('DSN'),
     integrations=[DjangoIntegration()]
 )
-
-# 关于Celery的配置
-CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'  # Broker配置，使用Redis作为消息中间件
-CELERY_RESULT_BACKEND = 'amqp://admin:mypass@rabbit:5672'  # BACKEND配置，这里使用redis
-CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
