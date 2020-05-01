@@ -5,24 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, DestroyModelMixin, UpdateModelMixin
-from apps.user_operation.models import UserComment, UserFav
-from apps.user_operation.serializers import CommentSerializer, UserFavSerializer
-from apps.user_operation.filiters import CommentFiliter
+from apps.user_operation.models import UserFav
+from apps.user_operation.serializers import UserFavSerializer
 from apps.utils.permissions import IsOwnerOrReadOnly
 
 
 # Create your views here.
-
-class CommentViewSet(ListModelMixin, viewsets.GenericViewSet, CreateModelMixin):
-    """评论管理API的视图"""
-    queryset = UserComment.objects.all()
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('id', 'body')  # 搜索
-    ordering_fields = ('id', 'created')  # 排序
-    filter_class = CommentFiliter
-
-    def get_serializer_class(self):
-        return CommentSerializer
 
 
 class UserFavViewSet(viewsets.GenericViewSet, CreateModelMixin, DestroyModelMixin, ListModelMixin):

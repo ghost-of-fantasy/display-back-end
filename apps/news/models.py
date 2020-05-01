@@ -2,6 +2,20 @@ from django.db import models
 from django.utils import timezone
 from taggit.managers import TaggableManager
 
+class Game(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    deleted_at = models.DateTimeField(blank=True, null=True)
+    name = models.CharField(unique=True, max_length=128)
+    img_path = models.CharField(max_length=256, blank=True, null=True)
+    publish_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'monitor_game'
+        verbose_name = '游戏'
+        verbose_name_plural = verbose_name
 
 class Article(models.Model):
     """文章"""
@@ -23,7 +37,7 @@ class Article(models.Model):
 
     class Meta:
         ordering = ('-publish_time',)
-        verbose_name = '文章'
+        verbose_name = '游戏新闻'
         verbose_name_plural = verbose_name
 
     def __str__(self):

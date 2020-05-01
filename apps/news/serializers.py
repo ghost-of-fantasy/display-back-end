@@ -20,11 +20,13 @@ class TagSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     """文章的序列化函数"""
-    tags = serializers.SerializerMethodField('get_tags')
+    tags = serializers.SerializerMethodField()
+    stags = serializers.CharField(label="歌单标签的字符串", help_text='中间用空格隔开', write_only=True, required=False)
 
     class Meta:
         model = Article
         fields = "__all__"
+        read_only_fields = ('tags', )
 
     def get_tags(self, obj):
         tags = []
@@ -32,6 +34,17 @@ class ArticleSerializer(serializers.ModelSerializer):
             tag = {'id': i.id, 'name': i.name}
             tags.append(tag)
         return tags
+
+    def update(self, instance, validated_data):
+        tags = validated_data.pop('stags', '')
+        article = super().update(instance, validated_data)
+
+        if tags:
+            article.tags.clear()
+            for tag in tags.split(' '):
+                article.tags.add(tag)
+
+        return article
 
 
 class ArticleCreateSerializer(serializers.ModelSerializer):

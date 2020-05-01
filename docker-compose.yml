@@ -21,16 +21,6 @@ services:
     ports:
       - "5432:5432"
 
-  # RabbitMQ - queue
-  rabbit:
-    container_name: gamenews_rabbit
-    image: rabbitmq:3.8.0-management-alpine
-    env_file: pro.env
-    restart: always
-    ports:
-      - "5672:5672"
-      - "15672:15672"  # here, we can access rabbitmq management plugin
-
   web:
     build: .
     container_name: gamenews_web
@@ -41,7 +31,6 @@ services:
     depends_on:
       - db
       - redis
-      - rabbit
     restart: always
     ports:
       - "8000:8000"
@@ -58,3 +47,8 @@ volumes:
   redis_data:
   static:
   media:
+
+networks:
+  default:
+    external:
+      name: gamenews_network
