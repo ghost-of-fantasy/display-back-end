@@ -29,6 +29,8 @@ class Article(models.Model):
     url = models.CharField(max_length=500, unique=True, verbose_name='文章链接')
     title = models.CharField(max_length=250, verbose_name='文章标题')
     content = models.TextField(verbose_name='文章内容')
+    click = models.BigIntegerField(default=0, verbose_name='点击次数')
+    creator = models.CharField(default='niracler', max_length=64, verbose_name='创建者用户名')
     publish_time = models.DateTimeField(default=timezone.now, verbose_name='发布时间')
     created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
@@ -42,3 +44,23 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+class Event(models.Model):
+    id = models.BigAutoField(primary_key=True, verbose_name='ID')
+    name = models.CharField(max_length=128, verbose_name='事件名称')
+    articles = models.ManyToManyField(Article, related_name='articles', verbose_name='新闻列表')
+    creator = models.CharField(default='niracler', max_length=64, verbose_name='创建者用户名')
+    # tags = models.ManyToManyField(Tag, related_name='playlist_tag', verbose_name='标签')
+    # cimg = models.ImageField(upload_to='cimg', default='cimg/default.jpg', verbose_name='封面')
+    click = models.BigIntegerField(default=0, verbose_name='点击次数')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+    description = models.TextField(verbose_name='事件描述')
+
+    class Meta:
+        ordering = ('-id',)
+        verbose_name = '游戏新闻事件'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
