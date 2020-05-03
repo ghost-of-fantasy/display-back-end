@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Article, Game
+from .models import Article, Game, Event
 
 
 # Register your models here.
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     """文章管理类"""
-    list_display = ('id', 'title', 'publish_time', 'status')
+    list_display = ('id', 'title','creator', 'click', 'publish_time', 'status')
     list_filter = ('publish_time', 'status')
     search_fields = ('title', 'content')
     date_hierarchy = 'publish_time'
@@ -20,3 +20,13 @@ class GameAdmin(admin.ModelAdmin):
     search_fields = ('name', )
     date_hierarchy = 'created_at'
     ordering = ('created_at', )
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    """游戏新闻事件管理类"""
+    list_display = ('id', 'name', 'creator', 'click', 'created', 'updated')
+    list_filter = ('creator',)
+    search_fields = ('name', )
+    date_hierarchy = 'updated'
+    ordering = ('created', 'name')

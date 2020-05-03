@@ -20,7 +20,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
-from news.views import ArticleViewSet, TagViewSet
+from news.views import ArticleViewSet, TagViewSet, EventViewSet
 from user_operation.views import UserFavViewSet
 from users.views import UserViewSet, SmsCodeViewSet
 from django.urls import path
@@ -28,7 +28,8 @@ from django.conf.urls import url
 
 router = routers.DefaultRouter()
 router.register(r'article', ArticleViewSet, base_name='article')  # 文章管理api
-router.register(r'tag', TagViewSet, base_name='tag')  # 评论管理api
+router.register(r'tag', TagViewSet, base_name='tag')  # 新闻标签管理api
+router.register(r'event', EventViewSet, base_name='event')  # 新闻事件管理api
 router.register(r'register', UserViewSet, base_name='register')  # 用户管理api
 router.register(r'code', SmsCodeViewSet, base_name="code")  # 验证码api
 router.register(r'userfav', UserFavViewSet, base_name="userfav")  # 用户收藏api

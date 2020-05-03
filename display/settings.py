@@ -37,6 +37,8 @@ AUTH_USER_MODEL = 'users.UserProfile'
 
 # Application definition
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

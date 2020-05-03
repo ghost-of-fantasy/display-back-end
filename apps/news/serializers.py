@@ -1,7 +1,7 @@
 from django.db.models import Count
 from rest_framework import serializers
 from taggit.models import Tag
-from .models import Article
+from .models import Article, Event
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -93,3 +93,65 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
             article.tags = ""
 
         return article
+
+class EventDetailSerializer(serializers.ModelSerializer):
+    articles = serializers.SerializerMethodField(label="游戏新闻列表")
+
+    def get_articles(self, obj):
+        return ArticleSerializer(obj.articles, many=True, context={'request': self.context['request']}).data
+
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ('creator', 'creator', 'id')
+
+class EventListSerializer(serializers.ModelSerializer):
+
+    articles = serializers.SerializerMethodField(label="游戏新闻列表")
+    latest = serializers.SerializerMethodField(label="内容")
+
+    def get_articles(self, obj):
+        return [{'title':article.title, 'time':article.publish_time} for article in obj.articles.all()]
+    
+    def get_latest(self, obj):
+        return ArticleSerializer(obj.articles.all()[0], context={'request': self.context['request']}).data
+
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ('creator', )
+
+class EventSerializer(serializers.ModelSerializer):
+    """关于游戏新闻事件的序列化函数"""
+
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ('creator', )
+
+#     def create(self, validated_data):
+#         tags = validated_data.pop('stags', '')
+#         playlist = super().create(validated_data)
+#         playlist.tags.set(get_tag_list(tags))
+
+#         # 记录创建用户
+#         user = self.context['request'].myuser
+#         playlist.creator = user.username
+#         playlist.save()
+
+#         return playlist
+
+#     def update(self, instance, validated_data):
+#         tags = validated_data.pop('stags', '')
+#         song = validated_data.pop('song', '')
+
+#         playlist = super().update(instance, validated_data)
+#         if tags:
+#             playlist.tags.set(get_tag_list(tags))
+#         if song:
+#             try:
+#                 playlist.tracks.add(song)
+#             except Exception as e:
+#                 print("不存在的歌曲：" + song + str(e))
+
+#         return playlist

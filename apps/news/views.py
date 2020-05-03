@@ -4,10 +4,10 @@ from rest_framework import viewsets, filters, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, \
     UpdateModelMixin
-from apps.news.filiters import ArticleFiliter
-from apps.news.models import Article
+from apps.news.filiters import ArticleFiliter, EventFilter
+from apps.news.models import Article, Event
 from apps.news.serializers import ArticleSerializer, TagSerializer, \
-    ArticleCreateSerializer
+    ArticleCreateSerializer, EventSerializer, EventDetailSerializer, EventListSerializer
 from taggit.models import Tag
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
@@ -40,7 +40,7 @@ class ArticleViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet
 
 
 class TagViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet):
-    """文章类型管理API的视图"""
+    """标签类型管理API的视图"""
     tag_queryset = Tag.objects.all()
     queryset = tag_queryset.annotate(num_times=Count('taggit_taggeditem_items'))
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -50,3 +50,20 @@ class TagViewSet(CacheResponseMixin, ListModelMixin, viewsets.GenericViewSet):
 
     def get_serializer_class(self):
         return TagSerializer
+
+class EventViewSet(CacheResponseMixin, viewsets.GenericViewSet, ListModelMixin, CreateModelMixin, RetrieveModelMixin,
+                      UpdateModelMixin,
+                      DestroyModelMixin):
+    queryset = Event.objects.all()
+    pagination_class = Pagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_class = EventFilter
+    search_fields = ('name', 'description')
+    ordering_fields = ('id', 'name', 'created', 'updated', 'click')
+
+    def get_serializer_class(self):
+        if self.action =='list':
+            return EventListSerializer
+        if self.action == 'retrieve':
+            return EventDetailSerializer
+        return EventSerializer
