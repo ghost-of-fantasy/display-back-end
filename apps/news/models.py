@@ -47,18 +47,15 @@ class Article(models.Model):
 
 class Event(models.Model):
     id = models.BigAutoField(primary_key=True, verbose_name='ID')
-    name = models.CharField(max_length=128, verbose_name='事件名称')
+    name = models.CharField(max_length=128,unique=True, verbose_name='事件名称')
     articles = models.ManyToManyField(Article, related_name='articles', verbose_name='新闻列表')
     creator = models.CharField(default='niracler', max_length=64, verbose_name='创建者用户名')
-    # tags = models.ManyToManyField(Tag, related_name='playlist_tag', verbose_name='标签')
-    # cimg = models.ImageField(upload_to='cimg', default='cimg/default.jpg', verbose_name='封面')
     click = models.BigIntegerField(default=0, verbose_name='点击次数')
     created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-    updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-    description = models.TextField(verbose_name='事件描述')
+    updated = models.DateTimeField(default=timezone.now, verbose_name='更新时间')
 
     class Meta:
-        ordering = ('-id',)
+        ordering = ('-updated',)
         verbose_name = '游戏新闻事件'
         verbose_name_plural = verbose_name
 

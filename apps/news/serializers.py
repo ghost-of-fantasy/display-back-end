@@ -1,7 +1,7 @@
 from django.db.models import Count
 from rest_framework import serializers
 from taggit.models import Tag
-from .models import Article
+from .models import Article, Event
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -94,40 +94,40 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
 
         return article
 
-# class PlayListDetailSerializer(serializers.ModelSerializer):
-#     tags = serializers.SerializerMethodField()
-#     tracks = serializers.SerializerMethodField(label="歌曲目录")
+class EventDetailSerializer(serializers.ModelSerializer):
+    articles = serializers.SerializerMethodField(label="游戏新闻列表")
 
-#     def get_tags(self, obj):
-#         return [tag.name for tag in obj.tags.all()]
+    def get_articles(self, obj):
+        return ArticleSerializer(obj.articles, many=True, context={'request': self.context['request']}).data
 
-#     def get_tracks(self, obj):
-#         return SongListSerializer(obj.tracks, many=True, context={'request': self.context['request']}).data
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ('creator', 'creator', 'id')
 
-#     class Meta:
-#         model = PlayList
-#         fields = "__all__"
-#         read_only_fields = ('creator', 'tags', 'creator', 'lid')
+class EventListSerializer(serializers.ModelSerializer):
 
+    articles = serializers.SerializerMethodField(label="游戏新闻列表")
+    latest = serializers.SerializerMethodField(label="内容")
 
-# class PlayListSerializer(serializers.ModelSerializer):
-#     """关于歌单的序列化函数"""
+    def get_articles(self, obj):
+        return [{'title':article.title, 'time':article.publish_time} for article in obj.articles.all()]
+    
+    def get_latest(self, obj):
+        return ArticleSerializer(obj.articles.all()[0], context={'request': self.context['request']}).data
 
-#     lid = serializers.IntegerField(label='ID', validators=[UniqueValidator(queryset=PlayList.objects.all())],
-#                                    help_text='空的话， 就是自增序列', required=False)
-#     tags = serializers.SerializerMethodField()
-#     stags = serializers.CharField(label="歌单标签的字符串", help_text='中间用空格隔开', write_only=True, required=False)
-#     tracks = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, required=False,
-#                                                 allow_empty=True, allow_null=True)
-#     song = serializers.CharField(write_only=True, required=False)
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ('creator', )
 
-#     def get_tags(self, obj):
-#         return [tag.name for tag in obj.tags.all()]
+class EventSerializer(serializers.ModelSerializer):
+    """关于游戏新闻事件的序列化函数"""
 
-#     class Meta:
-#         model = PlayList
-#         fields = "__all__"
-#         read_only_fields = ('creator', 'tags', 'lid')
+    class Meta:
+        model = Event
+        fields = "__all__"
+        read_only_fields = ('creator', )
 
 #     def create(self, validated_data):
 #         tags = validated_data.pop('stags', '')

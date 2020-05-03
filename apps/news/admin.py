@@ -27,6 +27,6 @@ class EventAdmin(admin.ModelAdmin):
     """游戏新闻事件管理类"""
     list_display = ('id', 'name', 'creator', 'click', 'created', 'updated')
     list_filter = ('creator',)
-    search_fields = ('name', 'description')
-    date_hierarchy = 'created'
+    search_fields = ('name', )
+    date_hierarchy = 'updated'
     ordering = ('created', 'name')

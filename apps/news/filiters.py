@@ -1,7 +1,7 @@
 import django_filters
 from django.db.models import Q
 from taggit.models import Tag
-from .models import Article
+from .models import Article, Event
 
 
 class ArticleFiliter(django_filters.rest_framework.FilterSet):
@@ -23,4 +23,12 @@ class ArticleFiliter(django_filters.rest_framework.FilterSet):
         return queryset.filter(tags__in=[tag])
 
 
+class EventFilter(django_filters.rest_framework.FilterSet):
+    """新闻事件的api的过滤器"""
+    id = django_filters.CharFilter(field_name='id')
+    name = django_filters.CharFilter(field_name='name')
+    created = django_filters.CharFilter(field_name='created')
 
+    class Meta:
+        model = Event
+        fields = ['id', 'name', 'created', ]
